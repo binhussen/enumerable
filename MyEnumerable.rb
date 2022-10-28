@@ -1,26 +1,25 @@
 module MyEnumerable
-    def all 
-        each do |x|
-            if !yield(x) 
-                return false
-        end
-        return true
+  def all?
+    check_enum = true
+    each do |n|
+      check_enum = false unless yield n
     end
+    check_enum
+  end
 
-    def any
-        each do |t|
-            if yield(x) 
-                return true
-        end
-        false
+  def any?
+    check_enum = false
+    each do |n|
+      check_enum = true if yield n
     end
+    check_enum
+  end
 
-    def filter
-        result = []
-        each do |d|
-            if yield(d)
-                result<<d
-        end
-        false
+  def filter
+    check_enum = []
+    each do |n|
+      check_enum.push(n) if yield n
     end
+    check_enum
+  end
 end
